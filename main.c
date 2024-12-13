@@ -43,6 +43,32 @@ void draw_world(char32_t* data, int width, int height)
   }
 }
 
+char32_t* example_tree()
+{
+  short bmp_width = 6;
+  short bmp_height = 8;
+
+  char32_t* buffer = malloc(bmp_width*bmp_height*sizeof(char32_t));
+  if (buffer == NULL) {
+    printf("allocation fail");
+    return NULL;
+  }
+
+  char32_t tree_data[] = {
+    U'░', U'░', U'░', U'░', U'░', U'░',
+    U'░', U'░', U'░', U'░', U'░', U'░',
+    U'░', U'░', U'/', U'\\', U'░', U'░',
+    U'░', U'/', U'/', U'\\', U'\\', U'░',
+    U'/', U'/', U'/', U'\\', U'\\', U'\\',
+    U'/', U'/', U'[', U']', U'\\', U'\\',
+    U'░', U'░', U'[', U']', U'░', U'░',
+    U'░', U'░', U'[', U']', U'░', U'░'
+  };
+  memcpy(buffer, tree_data, bmp_width * bmp_height * sizeof(char32_t));
+
+  return buffer;
+}
+
 char32_t* generate_tree()
 {
   short bmp_width = 10;
@@ -89,8 +115,9 @@ int main() {
 
     char32_t* world = init_world(world_width, world_height);
 
-    char32_t* tree = generate_tree();
-    ascii_bmp_cpy(world, tree, 10, 10, 10, 10, world_width);
+    char32_t* tree = example_tree();
+    ascii_bmp_cpy(world, tree, 10, 12, 6, 8, world_width);
+    ascii_bmp_cpy(world, tree, 20, 12, 6, 8, world_width);
     destroy_tree(tree);
 
     int tree_x = 4;
